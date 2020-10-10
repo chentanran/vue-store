@@ -8,6 +8,22 @@ import store from './store'
 import 'xe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
+
+const Stroage = {
+  // 重写setItem事件，当使用setItem的时候，触发，window.dispatchEvent派发事件
+  dispatchEventStroage () {
+    const signSetItem = localStorage.setItem
+    localStorage.setItem = function (key, val) {
+      const setEvent = new Event('setItemEvent')
+      setEvent.key = key
+      setEvent.newValue = val
+      window.dispatchEvent(setEvent)
+      signSetItem.apply(this, arguments)
+    }
+  }
+}
+Vue.use(Stroage)
+Stroage.dispatchEventStroage()
  
 Vue.use(VXETable)
 
@@ -20,7 +36,9 @@ import {
   Lazyload,
   List,
   Field,
-  NavBar
+  NavBar,
+  Checkbox,
+  CheckboxGroup 
 } from 'vant'
 
 Vue.use(Button)
@@ -32,6 +50,8 @@ Vue.use(Button)
    .use(List)
    .use(Field)
    .use(NavBar)
+   .use(Checkbox)
+   .use(CheckboxGroup)
 
 // Vue.use(vueAwesomeSwiper)
 

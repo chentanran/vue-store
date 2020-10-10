@@ -115,6 +115,13 @@ export default {
     };
   },
   created() {
+    console.log('wahah')
+    window.addEventListener('setItemEvent', (e) => {
+      if (e.key === 'admin') {
+        console.log('111111', '-----')
+      }
+    })
+    //
     axios({
       // url: "/static/json/index.json",
       url: url.getShoppingMallInfo,

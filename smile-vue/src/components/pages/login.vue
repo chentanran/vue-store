@@ -20,6 +20,14 @@
         required
         :error-message="passwordErrorMsg"
       />
+      <van-field name="checkboxGroup" label="复选框组">
+        <template #input>
+          <van-checkbox-group v-model="checkboxGroup" direction="horizontal">
+            <van-checkbox name="1" shape="square">复选框 1</van-checkbox>
+            <van-checkbox name="2" shape="square">复选框 2</van-checkbox>
+          </van-checkbox-group>
+        </template>
+      </van-field>
       <div class="register-button">
         <van-button :loading="openLoading" @click="registerAction" type="primary" size="large">马上注册</van-button>
       </div>
@@ -42,6 +50,7 @@ import { Toast } from "vant";
 export default {
   data() {
     return {
+      checkboxGroup: [],
       username: "",
       password: "",
       openLoading: false,
