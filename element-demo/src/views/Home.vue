@@ -83,15 +83,17 @@ export default {
         console.log(this.traceParentNode(data.parentId, this.listData, '0'), '父节点id')
         console.log(this.traceChildNode(data.id, this.listData), '字节点id')
 
+        // 获取父节点id
         const arrParent = this.traceParentNode(data.parentId, this.listData, '0')
+        // 获取字节点id
         const arrChild = this.traceChildNode(data.id, this.listData)
 
         const arr = [...arrParent, ...arrChild]
-
+        // 如果没有父子节点，直接return
         if (arr.length <= 0) {
           return
         }
-
+        // 对比卡片的数据和当前勾选的复选框的父子id， 如果相同， 就取消选中并移除
         for (let i = 0; i < this.cardList.length; i++) {
           for (let j = 0; j < arr.length; j++) {
             if (this.cardList[i].id === arr[j].id) {
@@ -101,6 +103,7 @@ export default {
           }
         }
       } else {
+        // 当取消选中时, 将当前数据过滤掉
         this.cardList = this.cardList.filter(item => {
           return item.id !== data.id
         })
@@ -207,6 +210,7 @@ export default {
       }
     },
 
+    // 获取字节点
     traceChildNode (id, data, pidName = 'parentId', idName = 'id', childrenName = 'children') {
       let arr = []
       this.foreachTree(data, childrenName, (node) => {
