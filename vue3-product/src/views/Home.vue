@@ -33,6 +33,13 @@ interface DataProps {
   overAction?: () => void;
 }
 
+enum person {
+  wahaha = 'oooo',
+  shuangwaiwai = 'iiii',
+  pinduoduo = 'pinduoduo',
+  dashanghai = 'dashanghai'
+}
+
 import { 
   defineComponent, 
   reactive, 
