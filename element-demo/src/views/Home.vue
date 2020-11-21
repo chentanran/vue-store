@@ -210,7 +210,7 @@ export default {
       }
     },
 
-    // 获取字节点
+    // 获取子节点
     traceChildNode (id, data, pidName = 'parentId', idName = 'id', childrenName = 'children') {
       let arr = []
       this.foreachTree(data, childrenName, (node) => {

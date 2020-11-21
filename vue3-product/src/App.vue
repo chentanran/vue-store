@@ -1,10 +1,16 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
   <router-view/>
 </template>
+
+<script>
+import Ref from './components/Ref'
+export default {
+  name: 'app',
+  comments: {
+    Ref
+  }
+}
+</script>
 
 <style>
 #app {
