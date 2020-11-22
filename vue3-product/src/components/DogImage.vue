@@ -1,7 +1,8 @@
 <template>
   <div>
     <div v-if="loading">loading...</div>
-    <img v-if="loaded && result !== null" :src="result[0].url" />
+    <!-- <img v-if="loaded && result !== null && Array.isArray(result)" :src="result[0].url" /> -->
+    <img v-if="loaded && result !== null" :src="result.message" />
     <div v-if="error">{{ error }}</div>
   </div>
 </template>
@@ -10,7 +11,7 @@
 import useUrlLoading from '@/hooks/useUrlLoading'
 
 const dogApi = 'https://dog.ceo/api/breeds/image/random'
-const catApi = 'http://api.thecatapi.com/v1/images/search?limit=1'
+// const catApi = 'http://api.thecatapi.com/v1/images/search?limit=1'
 
 interface DogResult {
   message: string;
@@ -24,8 +25,8 @@ interface CatResult {
 
 export default {
   setup() {
-    // const { result, error, loading, loaded } = useUrlLoading<DogResult>(dogApi)
-    const { result, error, loading, loaded } = useUrlLoading<CatResult[]>(catApi)
+    const { result, error, loading, loaded } = useUrlLoading<DogResult>(dogApi)
+    // const { result, error, loading, loaded } = useUrlLoading<CatResult[]>(catApi)
 
     return {
       result,
