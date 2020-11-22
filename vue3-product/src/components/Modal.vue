@@ -1,12 +1,31 @@
 <template>
   <teleport to="#modal">
-    <div id="center">
-      <h2>JSPang11</h2>
+    <div id="center" v-if="isOpen">
+      <h2>娃哈哈真好喝</h2>
+      <button @click="buttonClick">close</button>
     </div>
   </teleport>
 </template>
 <script lang="ts">
-export default {};
+import { defineComponent } from 'vue'
+export default defineComponent({
+  props: {
+    isOpen: Boolean,
+  },
+  emits: {
+    'close-modal': null
+  },
+  setup(props, context) {
+    console.log(props, context, 'context')
+    const buttonClick = () => {
+      context.emit('close-modal')
+    }
+    
+    return {
+      buttonClick
+    }
+  }
+})
 </script>
 <style>
 #center {
