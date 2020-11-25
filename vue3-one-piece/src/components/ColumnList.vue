@@ -18,7 +18,9 @@
                   -webkit-box-orient: vertical;
                   height: 3rem;"
             >{{ column.description }}</p>
-          <a href="#" class="btn btn-outline-primary">进入专栏</a>
+          <router-link class="btn btn-primary" :to="{name: 'columnDetail', query: { id: column.id }}">
+            进入专栏
+          </router-link>
         </div>
       </div>
     </div>

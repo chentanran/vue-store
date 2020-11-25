@@ -19,7 +19,7 @@
             <a class="dropdown-item" href="#" >编辑文章</a>
           </DropDownItem>
           <DropDownItem>
-            <a class="dropdown-item" href="#">退出登录</a>
+            <router-link class="dropdown-item" :to="{ name: 'login' }">退出登录</router-link>
           </DropDownItem>
         </DropDown>
       </li>

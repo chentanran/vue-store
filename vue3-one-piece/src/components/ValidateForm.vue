@@ -21,7 +21,7 @@ export default defineComponent({
     const allValidateInput: ValidFunc[] = []
 
     const submitForm = () => {
-      const result = allValidateInput.map(func => func())
+      const result = allValidateInput.map(func => func()).every(item => item)
       console.log(result, 'result', allValidateInput)
       context.emit('form-submit', result)
     }
