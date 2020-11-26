@@ -22,6 +22,7 @@
         <span class="btn btn-danger">submit</span>
       </template>
     </ValidateForm>
+    <input @input="handleValue" v-model="inputs">
   </div>
 </template>
 
@@ -30,6 +31,7 @@ import { ref } from 'vue'
 import ValidateForm from '@/components/ValidateForm.vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 export default {
   name: 'login',
   components: {
@@ -40,6 +42,23 @@ export default {
     const emailVal = ref('')
     const passwordVal = ref('')
     const router = useRouter()
+    const inputs = ref('')
+    let str = ''
+    const store = useStore()
+
+    const handleValue = (e: Event) => {
+      const target = e.target as HTMLInputElement
+
+      if (target.value.length > str.length) {
+        str += target.value.split('')[target.value.length - 1]
+      } else {
+        str = str.substring(0, str.length - 1)
+      }
+
+      console.log(str, 'str')
+
+      inputs.value = target.value.replace(/\S/gi, '*')
+    }
 
     const emailRules: RulesProp = [
       { type: 'required', message: '邮箱地址不能为空' },
@@ -53,6 +72,7 @@ export default {
     const handlesSubmit = (formValid: boolean) => {
       if (formValid) {
         router.push({ name: 'home' })
+        store.commit('login')
       }
     }
 
@@ -61,7 +81,9 @@ export default {
       emailVal,
       handlesSubmit,
       passwordRules,
-      passwordVal
+      passwordVal,
+      inputs,
+      handleValue
     }
   }
 }

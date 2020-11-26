@@ -3,7 +3,8 @@
     <a class="navbar-brand ml-2" href="#">知乎专栏</a>
     <ul v-if="!user.isLogin" class="list-inline mb-0 px-4">
       <li class="list-inline-item">
-        <a href="#" class="btn btn-outline-light my-2">登录</a>
+        <!-- <a href="#" class="btn btn-outline-light my-2">登录</a> -->
+        <router-link class="btn btn-outline-light my-2" :to="{ name: 'login' }">登录</router-link>
       </li>
       <li class="list-inline-item">
         <a href="#" class="btn btn-outline-light my-2">注册</a>
