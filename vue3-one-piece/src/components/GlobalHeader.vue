@@ -14,13 +14,13 @@
       <li class="list-inline-item">
         <DropDown :title="`你好 ${user.name}`">
           <DropDownItem>
-            <a class="dropdown-item" href="#" @click="handleClick">新建文章</a>
+            <router-link class="dropdown-item" :to="{ name: 'createPost' }">新建文章</router-link>
           </DropDownItem>
           <DropDownItem disabled>
             <a class="dropdown-item" href="#" >编辑文章</a>
           </DropDownItem>
           <DropDownItem>
-            <router-link class="dropdown-item" :to="{ name: 'login' }">退出登录</router-link>
+            <a class="dropdown-item" href="#" @click="loginout">退出登录</a>
           </DropDownItem>
         </DropDown>
       </li>
@@ -32,6 +32,8 @@
 import { defineComponent } from 'vue'
 import DropDown from './DropDown.vue'
 import DropDownItem from './DropDownItem.vue'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export interface UserProps {
   isLogin: boolean;
   name?: string;
@@ -50,11 +52,16 @@ export default defineComponent({
     }
   },
   setup () {
-    const handleClick = () => {
-      alert('11111')
+    const store = useStore()
+    const router = useRouter()
+
+    const loginout = () => {
+      store.commit('loginout')
+      router.push({ name: 'login' })
     }
+
     return {
-      handleClick
+      loginout
     }
   }
 })

@@ -1,7 +1,7 @@
 <template>
   <div>
     <input
-      type="email"
+      v-if="tag === 'input'"
       class="form-control"
       :class="{ 'is-invalid': inputRef.error }"
       aria-describedby="emailHelp"
@@ -10,6 +10,16 @@
       @input="updateValue"
       v-bind="$attrs"
     >
+    <textarea
+      v-else
+      class="form-control"
+      :class="{ 'is-invalid': inputRef.error }"
+      aria-describedby="emailHelp"
+      :value="inputRef.val"
+      @blur="validateInput"
+      @input="updateValue"
+      v-bind="$attrs"
+    />
     <div class="invalid-feedback" v-if="inputRef.error">{{ inputRef.message }}</div>
   </div>
 </template>
@@ -25,11 +35,16 @@ interface RuleProp {
 }
 
 export type RulesProp = RuleProp[]
+type tagProps = 'input' | 'textarea'
 export default defineComponent({
   name: 'ValidateInput',
   props: {
     rules: Array as () => RulesProp,
-    modelValue: String
+    modelValue: String,
+    tag: {
+      type: String as () => tagProps,
+      default: 'input'
+    }
   },
   setup (props, context) {
     const inputRef = reactive({
