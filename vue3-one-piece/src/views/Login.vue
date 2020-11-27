@@ -32,6 +32,7 @@ import ValidateForm from '@/components/ValidateForm.vue'
 import ValidateInput, { RulesProp } from '@/components/ValidateInput.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import createMessage from '@/components/createMessage'
 export default {
   name: 'login',
   components: {
@@ -71,8 +72,11 @@ export default {
 
     const handlesSubmit = (formValid: boolean) => {
       if (formValid) {
+        createMessage('登录成功', 'success')
         router.push({ name: 'home' })
         store.commit('login')
+      } else {
+        createMessage('登录失败，验证不通过', 'error')
       }
     }
 
