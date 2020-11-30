@@ -17,6 +17,7 @@ import { useStore } from 'vuex'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import GlobalHeader from '@/components/GlobalHeader.vue'
 import Loader from '@/components/Loader.vue'
+import '@/utils/tools'
 export default defineComponent({
   name: 'App',
   components: {
@@ -26,7 +27,7 @@ export default defineComponent({
   setup () {
     const store = useStore()
     const currentUser = computed(() => store.state.user)
-    const loading = ref(true)
+    const loading = ref(false)
 
     onMounted(() => {
       setTimeout(() => {
