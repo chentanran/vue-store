@@ -4,7 +4,9 @@
 				<view :style="{height: statusBarHeight + 'px'}"></view>
 				<view class="navbar-content" :style="{height: navBarHeight + 'px', width: windowWidth + 'px'}">
 					<view class="navbar-search">
-						<view class="navbar-search_icon"></view>
+						<view class="navbar-search_icon">
+							<uni-icons type="search" size="22" color="#999"></uni-icons>
+						</view> 
 						<view class="navbar-search_text">uni-app</view>
 					</view>
 				</view>
@@ -69,9 +71,10 @@
 					border-radius: 30px;
 					background-color: #fff;
 					.navbar-search_icon {
-						width: 10px;
-						height: 10px;
-						border: 1px red solid;
+						// width: 10px;
+						// height: 10px;
+						// border: 1px red solid;
+						margin-right: 10px;
 					}
 					.navbar-search_text {
 						font-size: 12px;

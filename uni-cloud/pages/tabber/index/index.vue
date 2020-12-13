@@ -1,8 +1,10 @@
 <template>
-	<view class="content">
+	<view class="home">
 		<navbar></navbar>
-		<tab :list="list"></tab>
-		<view v-for="item in 100" :key="item">item{{ item }}</view>
+		<tab :list="tabList" :tabIndex="tabIndex"  @tab="tab"></tab>
+		<view class="home-list">
+			<list :tab="tabList" :activeIndex="activeIndex" @change="change"></list>
+		</view>
 	</view>
 </template>
 
@@ -12,27 +14,47 @@
 			return {
 				title: 'Hello',
 				src: '',
-				list: [
-					{ name: 'app' },
-					{ name: 'h5' },
-					{ name: 'web' },
-					{ name: 'uni-app' },
-					{ name: 'taro' },
-					{ name: 'vue' },
-					{ name: 'react' },
-					{ name: 'angular' },
-					{ name: '小程序' },
-				]
+				tabList: [],
+				tabIndex: 0,
+				activeIndex: 0
 			}
 		},
 		onLoad() {
-
+			this.getLabel()
 		},
 		methods: {
+			getLabel() {
+				this.$api.getLabel().then(res => {
+					const { data } = res
+					data.unshift({ name: '全部' })
+					
+					this.tabList = data
+				})
+			},
+			tab (obj) {
+				this.activeIndex = obj.index
+			},
+			change (current) {
+				this.tabIndex = current
+				this.activeIndex = current
+			}
 		}
 	}
 </script>
 
-<style>
-
+<style lang="scss">
+	page {
+		height: 100%;
+		display: flex;
+	}
+	.home  {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		overflow: hidden;
+		.home-list {
+			flex:1;
+			box-sizing: border-box;
+		}
+	}
 </style>
