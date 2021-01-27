@@ -8,6 +8,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content__title">
 					<text>{{ item.title }}</text>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-content__des">
 					<view class="listcard-content__des-label">
@@ -23,6 +24,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content__title">
 					<text>{{item.title}}</text>
+					<likes :item="item"></likes>
 				</view>
 				<view class="listcard-image">
 					<view v-if="index < 3" v-for="(items,index) in item.cover" :key="index" class="listcard-image__item">
@@ -45,6 +47,7 @@
 			<view class="listcard-content">
 				<view class="listcard-content__title">
 					<text>{{item.title}}</text>
+					<likes :item="item"></likes>
 				</view>
 
 				<view class="listcard-content__des">
