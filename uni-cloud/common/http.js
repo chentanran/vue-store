@@ -1,11 +1,14 @@
+import store from '../store/index.js'
+
 export default function $http(option) {
 	const { url, data } = option
 	const obj = {
-		user_id: '5fd0d3ac6463510001f6b655',
+		user_id: store.state.userinfo._id,
 		...data
 	}
 	
 	return new Promise((resolve, reject) => {
+		
 		uniCloud.callFunction({
 			name: url,
 			data: obj

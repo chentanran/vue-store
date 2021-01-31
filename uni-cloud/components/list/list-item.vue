@@ -3,7 +3,7 @@
 		<view>
 			<list-card mode="base" :item="item" v-for="item in list" :key="item._id"></list-card>
 		</view>
-		<uni-load-more iconType="snow" :status="load.loading"></uni-load-more>
+		<uni-load-more iconType="snow" :status="load.loading || 'loading'"></uni-load-more>
 	</list-scroll>
 </template>
 

@@ -13,7 +13,8 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+								"navigationBarTitleText":"关注"
             }
             
         }
@@ -22,7 +23,8 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+								"navigationBarTitleText":"个人中心"
             }
             
         }
@@ -53,6 +55,26 @@
                 "navigationBarTitleText": "",
                 "enablePullDownRefresh": false,
 								"navigationBarTitleText":"详情"
+            }
+            
+        }
+        ,{
+            "path" : "pages/my-article/my-article",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+								"navigationBarTitleText":"我的文章"
+            }
+            
+        }
+        ,{
+            "path" : "pages/feedback/feedback",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false,
+								"navigationBarTitleText":"意见反馈"
             }
             
         }

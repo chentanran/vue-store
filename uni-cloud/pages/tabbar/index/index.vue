@@ -9,6 +9,7 @@
 </template>
 
 <script>
+	import {mapState} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -19,6 +20,14 @@
 				activeIndex: 0
 			}
 		},
+		computed:{
+			...mapState(['userinfo'])
+		},
+		watch:{
+			userinfo(newVal){
+				this.getLabel()
+			}
+		},
 		onLoad() {
 			uni.$on('changeLabel',(res)=>{
 				this.tabList = []
@@ -26,15 +35,23 @@
 				this.activeIndex = 0
 				this.getLabel()
 			})
-			this.getLabel()
+			
+			if (this.userinfo) {
+				this.getLabel()
+			}
 		},
 		methods: {
 			getLabel() {
+				uni.showLoading()
 				this.$api.get_label().then(res => {
 					const { data } = res
 					data.unshift({ name: '全部' })
 					
 					this.tabList = data
+					
+					uni.hideLoading()
+				}).catch(() => {
+					uni.hideLoading()
 				})
 			},
 			tab (obj) {

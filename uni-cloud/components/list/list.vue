@@ -48,6 +48,13 @@
 		// onLoad 在页面 ，created 组件
 		created() {
 			// TODO tab 还没有赋值
+			uni.$on('update_article', (e) => {
+				if (e === 'follow') {
+					this.listCatchData = {}
+					this.load = {}
+					this.getList((this.activeIndex))
+				}
+			})
 		},
 		methods: {
 			loadmore() {

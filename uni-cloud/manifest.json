@@ -1,5 +1,5 @@
 {
-    "name" : "uni-cloud",
+    "name" : "兔子博客",
     "appid" : "__UNI__5038981",
     "description" : "",
     "versionName" : "1.0.0",
@@ -57,9 +57,12 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wx6192fe5c86ae011d",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : true,
+            "postcss" : true,
+            "es6" : true,
+            "minified" : true
         },
         "usingComponents" : true
     },
