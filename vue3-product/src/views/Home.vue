@@ -15,8 +15,9 @@
 </template>
 
 <script lang="ts">
-import { onErrorCaptured, ref } from 'vue'
+import { onErrorCaptured, onMounted, ref } from 'vue'
 import AsyncComponent from '../components/AsyncComponents.vue'
+import Axios from 'axios'
 export default {
   name: 'home',
   components: {
@@ -27,6 +28,16 @@ export default {
 
     onErrorCaptured((e: any) => {
       error.value = e
+    })
+
+    onMounted(() => {
+      Axios.get('https://www.baidu.com', {
+        params: {
+          ID: [1,2,3,4,5,6]
+        }
+      }).then(res => {
+        console.log(res)
+      })
     })
 
     return {
