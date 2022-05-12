@@ -1,5 +1,4 @@
 import { i18n } from '@/plugins/vueI18n'
-import { ar } from 'element-plus/lib/locale'
 
 type I18nGlobalTranslation = {
   (key: string): string

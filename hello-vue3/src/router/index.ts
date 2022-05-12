@@ -7,24 +7,7 @@ const { t } = useI18n()
 
 export const constantRouterMap: AppRouteRecordRaw[] = [
 	{
-    path: '/redirect',
-    component: [],
-    name: 'Redirect',
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        name: 'Redirect',
-        component: () => import('@/views/Redirect/Redirect.vue'),
-        meta: {}
-      }
-    ],
-    meta: {
-      hidden: true,
-      noTagsView: true
-    }
-  },
-	{
-    path: '/login',
+    path: '/',
     component: () => import('@/views/Login/Login.vue'),
     name: 'Login',
     meta: {
