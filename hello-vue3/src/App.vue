@@ -1,21 +1,10 @@
 <template>
-  <Home msg="Hello Vue 3 + TypeScript + Vite" />
+  <RouterView />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
-import Home from './components/Home.vue'
+<script lang="ts" setup>
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    Home
-  }
-})
 </script>
 
 <style>
-#app {
-  height: 100%;
-}
 </style>
