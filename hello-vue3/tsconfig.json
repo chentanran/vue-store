@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    // "useDefineForClassFields": true,
     "module": "esnext",
     "moduleResolution": "node",
     "strict": true,
@@ -11,9 +12,11 @@
     "lib": ["esnext", "dom"],
     "baseUrl": ".",
     "noImplicitAny": false,
+    "skipLibCheck": true,
     "paths": {
       "@/*": ["src/*"]
-    },
+    }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*", "types/**/*.d.ts", "mock/**/*.ts"],
+  "exclude": ["dist", "node_modules"]
 }
