@@ -16,6 +16,9 @@ export const useAppStore = defineStore({
 		getIsDark(): boolean {
       return this.isDark
     },
+		getTitle(): string {
+      return this.title
+    },
 	},
 	actions: {
 		setIsDark(isDark: boolean) {
@@ -28,6 +31,9 @@ export const useAppStore = defineStore({
         document.documentElement.classList.remove('dark')
       }
       wsCache.set('isDark', this.isDark)
+    },
+		setTitle(title: string) {
+      this.title = title
     },
 	}
 })
