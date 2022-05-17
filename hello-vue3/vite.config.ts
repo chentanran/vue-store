@@ -8,6 +8,8 @@ import WindiCSS from 'vite-plugin-windicss'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 import PurgeIcons from 'vite-plugin-purge-icons'
 import styleImport, { ElementPlusResolve } from 'vite-plugin-style-import'
+import VueJsx from '@vitejs/plugin-vue-jsx'
+import { viteMockServe } from 'vite-plugin-mock'
 
 const root = process.cwd()
 
@@ -29,6 +31,7 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
     base: env.VITE_BASE_PATH,
     plugins: [
       vue(),
+      VueJsx(),
       WindiCSS(),
       VueI18n({
         runtimeOnly: true,
@@ -58,6 +61,17 @@ export default ({ command, mode }: ConfigEnv): UserConfig => {
             return `element-plus/es/components/${name.substring(3)}/style/css`
           }
         }]
+      }),
+      viteMockServe({
+        ignore: /^\_/,
+        mockPath: 'mock',
+        localEnabled: !isBuild,
+        prodEnabled: isBuild,
+        injectCode: `
+          import { setupProdMockServer } from '../mock/_createProductionServer'
+
+          setupProdMockServer()
+          `
       }),
     ],
     css: {

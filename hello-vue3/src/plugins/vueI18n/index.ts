@@ -7,12 +7,12 @@ import { setHtmlPageLang } from './helper'
 export let i18n: ReturnType<typeof createI18n>
 
 const createI18nOptions = async (): Promise<I18nOptions> => {
+
 	const localeStore = useLocaleStoreWithOut()
 	const locale = localeStore.getCurrentLocale
 	const localeMap = localeStore.getLocaleMap
 	const defaultLocal = await import(`../../locales/${locale.lang}.ts`)
 	const message = defaultLocal.default ?? {}
-
 	setHtmlPageLang(locale.lang)
 
 	localeStore.setCurrentLocale({

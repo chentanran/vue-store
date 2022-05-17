@@ -19,6 +19,9 @@ export const useAppStore = defineStore({
 		getTitle(): string {
       return this.title
     },
+    getUserInfo(): string {
+      return this.userInfo
+    },
 	},
 	actions: {
 		setIsDark(isDark: boolean) {
