@@ -35,7 +35,6 @@ export const useI18n = (namespace?: string) : { t: I18nGlobalTranslation } => {
 	const { t, ...methods } = i18n.global
 
 	const tFn: I18nGlobalTranslation = (key: string, ...arg: any[]) => {
-		console.log(getKey(namespace, key), '---------------------')
 		if (!key) return ''
 		if (!key.includes('.') && !namespace) return key
 		return t(getKey(namespace, key), ...(arg as I18nTranslationRestParameters))

@@ -31,7 +31,7 @@ const props = defineProps({
 })
 
 const elRef = ref<ElRef>(null)
-console.log(props.icon, 'props.iconprops.icon')
+
 const isLocal = computed(() => props.icon?.startsWith('svg-icon:'))
 
 const symbolId = computed(() => {
