@@ -22,6 +22,9 @@ export const useAppStore = defineStore({
     getUserInfo(): string {
       return this.userInfo
     },
+    getPageLoading(): boolean {
+      return this.pageLoading
+    },
 	},
 	actions: {
 		setIsDark(isDark: boolean) {
@@ -37,6 +40,9 @@ export const useAppStore = defineStore({
     },
 		setTitle(title: string) {
       this.title = title
+    },
+    setPageLoading(pageLoading: boolean) {
+      this.pageLoading = pageLoading
     },
 	}
 })
