@@ -5,9 +5,117 @@ import { useAppStore } from '@/store/modules/app'
 import { usePermissionStore } from '@/store/modules/premission'
 import type { LayoutType } from '@/config/app'
 import { useRenderMenuItem } from './components/useRenderMenuItem'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { isUrl } from '@/utils/is'
 import { useDesign } from '@/hooks/web/useDesign'
+
+const { getPrefixCls } = useDesign()
+const prefixCls = getPrefixCls('menu')
+export default defineComponent({
+  name: 'Menu',
+  props: {
+    menuSelect: {
+      type: Function as PropType<(index: string) => void>,
+      default: undefined
+    }
+  },
+  setup(props) {
+    const appStore = useAppStore()
+
+    const layout = computed(() => appStore.getLayout)
+
+    const { push, currentRoute } = useRouter()
+
+    const permissionStore = usePermissionStore()
+
+    const menuMode = computed((): 'vertical' | 'horizontal' => {
+      // 竖
+      const vertical: LayoutType[] = ['classic', 'topLeft', 'cutMenu']
+      if (vertical.includes(unref(layout))) {
+        return 'vertical'
+      } else {
+        return 'horizontal'
+      }
+    })
+
+    const routers = computed(() => {
+      return unref(layout) === 'cutMenu' ? permissionStore.getMenuTabRouters : permissionStore.getRouters
+    })
+
+    const collapse = computed(() => appStore.getCollapse)
+
+    const uniqueOpened = computed(() => appStore.getUniqueOpened)
+
+    const activeMenu = computed(() => {
+      const { meta, path } = unref(currentRoute)
+      // 如果设置了路径，侧边栏将突出显示您设置的路径
+      if (meta.activeMenu) {
+        return meta.activeMenu as string
+      }
+      return path
+    })
+
+    const menuSelect = (index: string) => {
+      if (props.menuSelect) {
+        props.menuSelect(index)
+      }
+      // 自定义事件
+      if (isUrl(index)) {
+        window.open(index)
+      } else {
+        push(index)
+      }
+    }
+
+    const renderMenuWrap = () => {
+      if (unref(layout) === 'top') {
+        return renderMenu()
+      } else {
+        return <ElScrollbar>{renderMenu()}</ElScrollbar>
+      }
+    }
+
+    const renderMenu = () => {
+      return (
+        <ElMenu
+          defaultActive={unref(activeMenu)}
+          mode={unref(menuMode)}
+          collapse={
+            unref(layout) === 'top' || unref(layout) === 'cutMenu' ? false : unref(collapse)
+          }
+          uniqueOpened={unref(layout) === 'top' ? false : unref(uniqueOpened)}
+          backgroundColor="var(--left-menu-bg-color)"
+          textColor="var(--left-menu-text-color)"
+          activeTextColor="var(--left-menu-text-active-color)"
+          onSelect={menuSelect}
+        >
+          {{
+            default: () => {
+              const { renderMenuItem } = useRenderMenuItem(unref(routers), unref(menuMode))
+              return renderMenuItem()
+            }
+          }}
+        </ElMenu>
+      )
+    }
+
+    return () => (
+      <div
+        id={prefixCls}
+        class={[
+          `${prefixCls} ${prefixCls}__${unref(menuMode)}`,
+          'h-[100%] overflow-hidden flex-col bg-[var(--left-menu-bg-color)]',
+          {
+            'w-[var(--left-menu-min-width)]': unref(collapse) && unref(layout) !== 'cutMenu',
+            'w-[var(--left-menu-max-width)]': !unref(collapse) && unref(layout) !== 'cutMenu'
+          }
+        ]}
+      >
+        {renderMenuWrap()}
+      </div>
+    )
+  }
+})
 </script>
 
 <style lang="less" scoped>
