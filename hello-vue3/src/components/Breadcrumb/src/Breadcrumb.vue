@@ -2,7 +2,7 @@
 import { ElBreadcrumb, ElBreadcrumbItem } from 'element-plus'
 import { ref, watch, computed, unref, defineComponent, TransitionGroup } from 'vue'
 import { useRouter } from 'vue-router'
-import { usePermissionStore } from '@/store/modules/premission'
+import { usePermissionStore } from '@/store/modules/permission'
 import { filterBreadcrumb } from './helper'
 import { filter, treeToList } from '@/utils/tree'
 import type { RouteLocationNormalizedLoaded, RouteMeta } from 'vue-router'

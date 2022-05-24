@@ -63,7 +63,6 @@ const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('login')
 
 const appStore = useAppStore()
-console.log(appStore.getTitle, '----------appStore')
 
 const { t } = useI18n()
 

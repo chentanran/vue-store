@@ -2,13 +2,12 @@
 import { computed, defineComponent, unref, PropType } from 'vue'
 import { ElMenu, ElScrollbar } from 'element-plus'
 import { useAppStore } from '@/store/modules/app'
-import { usePermissionStore } from '@/store/modules/premission'
+import { usePermissionStore } from '@/store/modules/permission'
 import type { LayoutType } from '@/config/app'
 import { useRenderMenuItem } from './components/useRenderMenuItem'
 import { useRouter } from 'vue-router'
 import { isUrl } from '@/utils/is'
 import { useDesign } from '@/hooks/web/useDesign'
-
 const { getPrefixCls } = useDesign()
 const prefixCls = getPrefixCls('menu')
 export default defineComponent({
@@ -21,13 +20,9 @@ export default defineComponent({
   },
   setup(props) {
     const appStore = useAppStore()
-
     const layout = computed(() => appStore.getLayout)
-
     const { push, currentRoute } = useRouter()
-
     const permissionStore = usePermissionStore()
-
     const menuMode = computed((): 'vertical' | 'horizontal' => {
       // 竖
       const vertical: LayoutType[] = ['classic', 'topLeft', 'cutMenu']
@@ -37,24 +32,19 @@ export default defineComponent({
         return 'horizontal'
       }
     })
-
-    const routers = computed(() => {
-      return unref(layout) === 'cutMenu' ? permissionStore.getMenuTabRouters : permissionStore.getRouters
-    })
-
+    const routers = computed(() =>
+      unref(layout) === 'cutMenu' ? permissionStore.getMenuTabRouters : permissionStore.getRouters
+    )
     const collapse = computed(() => appStore.getCollapse)
-
     const uniqueOpened = computed(() => appStore.getUniqueOpened)
-
     const activeMenu = computed(() => {
       const { meta, path } = unref(currentRoute)
-      // 如果设置了路径，侧边栏将突出显示您设置的路径
+      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu as string
       }
       return path
     })
-
     const menuSelect = (index: string) => {
       if (props.menuSelect) {
         props.menuSelect(index)
@@ -66,7 +56,6 @@ export default defineComponent({
         push(index)
       }
     }
-
     const renderMenuWrap = () => {
       if (unref(layout) === 'top') {
         return renderMenu()
@@ -74,7 +63,6 @@ export default defineComponent({
         return <ElScrollbar>{renderMenu()}</ElScrollbar>
       }
     }
-
     const renderMenu = () => {
       return (
         <ElMenu
@@ -98,7 +86,6 @@ export default defineComponent({
         </ElMenu>
       )
     }
-
     return () => (
       <div
         id={prefixCls}
@@ -117,7 +104,6 @@ export default defineComponent({
   }
 })
 </script>
-
 <style lang="less" scoped>
 @prefix-cls: ~'@{namespace}-menu';
 .is-active--after {

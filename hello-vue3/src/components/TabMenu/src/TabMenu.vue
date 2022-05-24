@@ -1,5 +1,5 @@
 <script lang="tsx">
-import { usePermissionStore } from '@/store/modules/premission'
+import { usePermissionStore } from '@/store/modules/permission'
 import { useAppStore } from '@/store/modules/app'
 import { computed, unref, watch, ref, defineComponent } from 'vue'
 import { useI18n } from '@/hooks/web/useI18n'

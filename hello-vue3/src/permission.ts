@@ -4,7 +4,7 @@ import { useCache } from '@/hooks/web/useCache'
 import type { RouteRecordRaw } from 'vue-router'
 import { useTitle } from '@/hooks/web/useTitle'
 import { useNProgress } from '@/hooks/web/useNProgress'
-import { usePermissionStoreWithOut } from '@/store/modules/premission'
+import { usePermissionStoreWithOut } from '@/store/modules/permission'
 import { usePageLoading } from '@/hooks/web/usePageLoading'
 
 const permissionStore = usePermissionStoreWithOut()

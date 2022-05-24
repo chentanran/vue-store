@@ -25,6 +25,8 @@ import '@/plugins/animate.css'
 // 全局组件
 import { setupGlobCom } from '@/components'
 
+import './permission'
+
 
 const setupAll = async () => {
 	const app = createApp(App)
