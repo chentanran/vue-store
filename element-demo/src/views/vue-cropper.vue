@@ -163,6 +163,8 @@ export default {
       const arr = [{ x: 0, y: 0 }, { x: 0, y: 150 }, { x: 150, y: 0 }, { x: 150, y: 150 }]
       for (let i = 0; i < 4; i++) {
         setTimeout(() => {
+          this.x = arr[i].x
+          this.y = arr[i].y
           this.changeOffser(arr[i].x, arr[i].y)
         }, i * 1000)
       }
@@ -197,7 +199,7 @@ export default {
         zoom: w
       }
 
-      this.changeOffser()
+      this.changeOffser(this.x, this.y)
       this.down()
     },
 
