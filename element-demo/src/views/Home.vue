@@ -14,7 +14,7 @@
         >
         </el-tree>
       </el-col>
-      <el-col :span='12'>
+      <!-- <el-col :span='12'>
         <el-card class='box-card'>
           <div slot='header' class='clearfix'>
             <span>卡片名称</span>
@@ -24,7 +24,7 @@
             {{ o.name }}
           </div>
         </el-card>
-      </el-col>
+      </el-col> -->
     </el-row>
 
   </div>
