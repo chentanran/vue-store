@@ -1,9 +1,24 @@
 <template>
   <div style="height: 100%;width:100%;">
     <div class="show-info" style="text-align:center;">
-      <h2>example1 基本例子 无限制</h2>
+      <h2>自动裁剪图片</h2>
+      <div>
+        <el-form :inline="true" :model="formInline">
+          <el-form-item v-for="item in formItem" :key="item.value" :label="item.label">
+            <el-input-number v-model="formInline[item.value]"></el-input-number>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="startImageFragments">启动</el-button>
+            <el-upload class="upload-demo" :before-upload="beforeUpload" action=""
+              style="display: inline-block;margin:0 10px;">
+              <el-button type="primary">点击上传</el-button>
+            </el-upload>
+            <el-button type="primary" @click="() => { cropImage = [] }">清除截图</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
       <div style="text-align:center;">
-        <div style="height:300px;width: 300px;margin:auto;">
+        <div style="height:842px;width: 595px;;margin:auto;">
           <vueCropper ref="cropper" :img="option.img" :outputSize="option.size"
             :outputType="option.outputType" :info="true" :full="option.full"
             :canMove="option.canMove" :canMoveBox="option.canMoveBox" :fixedBox="option.fixedBox"
@@ -17,118 +32,28 @@
           <img v-for="item in cropImage" :key="item" :src="item" alt="">
         </div>
       </div>
-      <div class="test-button">
-        <button @click="changeImg" class="btn">changeImg</button>
-        <label class="btn" for="uploads">upload</label>
-        <input type="file" id="uploads" style="position:absolute; clip:rect(0 0 0 0);"
-          accept="image/png, image/jpeg, image/gif, image/jpg" @change="uploadImg($event, 1)">
-        <button @click="startCrop" v-if="!crap" class="btn">start</button>
-        <button @click="stopCrop" v-else class="btn">stop</button>
-        <button @click="clearCrop" class="btn">clear</button>
-        <button @click="refreshCrop" class="btn">refresh</button>
-        <button @click="changeScale(1)" class="btn">+</button>
-        <button @click="changeScale(-1)" class="btn">-</button>
-        <button @click="rotateLeft" class="btn">rotateLeft</button>
-        <button @click="rotateRight" class="btn">rotateRight</button>
-        <button @click="finish('base64')" class="btn">preview(base64)</button>
-        <button @click="finish('blob')" class="btn">preview(blob)</button>
-        <a @click="down('base64')" class="btn">download(base64)</a>
-        <a @click="down('blob')" class="btn">download(blob)</a>
-        <a :href="downImg" download="demo.png" ref="downloadDom"></a>
-      </div>
-
-      <p>截图框大小</p>
-      <div class="show-preview"
-        :style="{'width': previews.w + 'px', 'height': previews.h + 'px',  'overflow': 'hidden','margin': '5px'}">
-        <div :style="previews.div">
-          <img :src="previews.url" :style="previews.img">
-        </div>
-      </div>
-
-      <p>中等大小</p>
-      <div :style="previewStyle1">
-        <div :style="previews.div">
-          <img :src="previews.url" :style="previews.img">
-        </div>
-      </div>
-
-      <p>迷你大小</p>
-      <div :style="previewStyle2">
-        <div :style="previews.div">
-          <img :src="previews.url" :style="previews.img">
-        </div>
-      </div>
-
-      <div style="display:block; width: 100%;">
-        <label class="c-item">
-          <span>上传图片是否显示原始宽高 (针对大图 可以铺满)</span>
-          <input type="checkbox" v-model="option.original">
-          <span>original: {{ option.original}}</span>
-        </label>
-        <label class="c-item">
-          <span>是否根据dpr生成适合屏幕的高清图片</span>
-          <input type="checkbox" v-model="option.high">
-          <span>high: {{ option.high}}</span>
-        </label>
-        <label class="c-item">
-          <span>是否输出原图比例的截图</span>
-          <input type="checkbox" v-model="option.full">
-          <span>full: {{ option.full}}</span>
-        </label>
-        <label class="c-item">
-          <span>截图信息展示是否是真实的输出宽高</span>
-          <input type="checkbox" v-model="option.infoTrue">
-          <span>infoTrue: {{ option.infoTrue}}</span>
-        </label>
-        <label class="c-item">
-          <span>能否拖动图片</span>
-          <input type="checkbox" v-model="option.canMove">
-          <span>canMove: {{ option.canMove}}</span>
-        </label>
-        <label class="c-item">
-          <span>能否拖动截图框</span>
-          <input type="checkbox" v-model="option.canMoveBox">
-          <span>canMoveBox: {{ option.canMoveBox}}</span>
-        </label>
-        <label class="c-item">
-          <span>截图框固定大小</span>
-          <input type="checkbox" v-model="option.fixedBox">
-          <span>fixedBox: {{ option.fixedBox}}</span>
-        </label>
-        <label class="c-item">
-          <span>是否自动生成截图框</span>
-          <input type="checkbox" v-model="option.autoCrop">
-          <span>autoCrop: {{ option.autoCrop}}</span>
-        </label>
-        <label class="c-item">
-          <span>截图框是否限制在图片里(只有在自动生成截图框时才能生效)</span>
-          <input type="checkbox" v-model="option.centerBox">
-          <span>centerBox: {{ option.centerBox}}</span>
-        </label>
-        <label class="c-item">
-          <span>是否按照截图框比例输出 默认为1 </span>
-          <input type="number" v-model="option.enlarge">
-        </label>
-        <p>输出图片格式</p>
-        <label class="c-item">
-          <label>jpg <input type="radio" name="type" value="jpeg"
-              v-model="option.outputType"></label>
-          <label>png <input type="radio" name="type" value="png"
-              v-model="option.outputType"></label>
-          <label>webp <input type="radio" name="type" value="webp"
-              v-model="option.outputType"></label>
-        </label>
-      </div>
-
-      <!-- <codes>
-        <div slot="body">{{ code1 }}</div>
-      </codes> -->
     </div>
   </div>
 </template>
 
 <script>
 import { VueCropper } from 'vue-cropper'
+
+// 将file文件上传转化为base64进行显示
+function getBase64 (file) {
+  return new Promise((resolve, reject) => {
+    /// FileReader类就是专门用来读文件的
+    const reader = new FileReader()
+    // 开始读文件
+    // readAsDataURL: dataurl它的本质就是图片的二进制数据， 进行base64加密后形成的一个字符串，
+    reader.readAsDataURL(file)
+    // 成功和失败返回对应的信息，reader.result一个base64，可以直接使用
+    reader.onload = () => resolve(reader.result)
+    // 失败返回失败的信息
+    reader.onerror = error => reject(error)
+  })
+}
+
 export default {
   components: {
     VueCropper
@@ -136,37 +61,104 @@ export default {
   data () {
     return {
       option: {
-        img: require('../assets/logo.png'),
+        img: require('../assets/a4.jpg'),
         size: 1,
-        outputType: 'png',
+        outputType: 'jpeg',
         autoCrop: true,
-        autoCropWidth: 150,
-        autoCropHeight: 150
+        autoCropWidth: 95,
+        autoCropHeight: 100
       },
-      downImg: '',
-      crap: true,
-      previews: {},
-      previewStyle1: {},
-      previewStyle2: {},
-      code1: '',
-      cropImage: []
+      cropImage: [],
+      formInline: {
+        x: 93,
+        y: 103,
+        w: 95,
+        h: 100,
+        xOffset: 105,
+        yOffset: 170,
+        xNumber: 4,
+        yNumber: 4
+      },
+      formItem: [
+        {
+          label: '宽',
+          value: 'w'
+        },
+        {
+          label: '高',
+          value: 'h'
+        },
+        {
+          label: 'x起始坐标',
+          value: 'x'
+        },
+        {
+          label: 'y起始坐标',
+          value: 'y'
+        },
+        {
+          label: 'x移动距离',
+          value: 'xOffset'
+        },
+        {
+          label: 'y移动距离',
+          value: 'yOffset'
+        },
+        {
+          label: 'x切割数量',
+          value: 'xNumber'
+        },
+        {
+          label: 'y切割数量',
+          value: 'yNumber'
+        }
+      ]
     }
   },
   mounted () {
-    setTimeout(() => {
-      this.getImageFragments()
-    }, 2000)
   },
   methods: {
+    async beforeUpload (file) {
+      this.option.img = await getBase64(file)
+      this.cropImage = []
+      return false
+    },
+    startImageFragments () {
+      this.cropImage = []
+      this.option.autoCropWidth = this.formInline.w
+      this.option.autoCropHeight = this.formInline.h
+      const { x, y, xOffset, yOffset, xNumber, yNumber } = this.formInline
+      this.getImageFragments(x, y, xOffset, yOffset, xNumber, yNumber)
+    },
     //
-    getImageFragments () {
-      const arr = [{ x: 0, y: 0 }, { x: 0, y: 150 }, { x: 150, y: 0 }, { x: 150, y: 150 }]
-      for (let i = 0; i < 4; i++) {
+    getImageFragments (x, y, xOffset, yOffset, xNumber, yNumber) {
+      // const arr = [
+      //   { x: 88 + 5, y: 73 + 30 }, { x: 88 + 5 + 105, y: 73 + 30 }, { x: 88 + 5 + 105 * 2, y: 73 + 30 }, { x: 88 + 5 + 105 * 3, y: 73 + 30 },
+      //   { x: 88 + 5, y: 73 + 30 + 170 }, { x: 88 + 5 + 105, y: 73 + 30 + 170 }, { x: 88 + 5 + 105 * 2, y: 73 + 30 + 170 }, { x: 88 + 5 + 105 * 3, y: 73 + 30 + 170 },
+      //   { x: 88 + 5, y: 73 + 30 + 170 * 2 }, { x: 88 + 5 + 105, y: 73 + 30 + 170 * 2 }, { x: 88 + 5 + 105 * 2, y: 73 + 30 + 170 * 2 }, { x: 88 + 5 + 105 * 3, y: 73 + 30 + 170 * 2 },
+      //   { x: 88 + 5, y: 73 + 30 + 170 * 3 }, { x: 88 + 5 + 105, y: 73 + 30 + 170 * 3 }, { x: 88 + 5 + 105 * 2, y: 73 + 30 + 170 * 3 }, { x: 88 + 5 + 105 * 3, y: 73 + 30 + 170 * 3 }
+      // ]
+      // const arr = [
+      //   { x: x, y: y }, { x: x + xOffset, y: y }, { x: x + xOffset * 2, y: y }, { x: x + xOffset * 3, y: y },
+      //   { x: x, y: y + yOffset }, { x: x + xOffset, y: y + yOffset }, { x: x + xOffset * 2, y: y + yOffset }, { x: x + xOffset * 3, y: y + yOffset },
+      //   { x: x, y: y + yOffset * 2 }, { x: x + xOffset, y: y + yOffset * 2 }, { x: x + xOffset * 2, y: y + yOffset * 2 }, { x: x + xOffset * 3, y: y + yOffset * 2 },
+      //   { x: x, y: y + yOffset * 3 }, { x: x + xOffset, y: y + yOffset * 3 }, { x: x + xOffset * 2, y: y + yOffset * 3 }, { x: x + xOffset * 3, y: y + yOffset * 3 }
+      // ]
+
+      // x 和 y 轴 切割图片的数量
+      const arr1 = []
+      for (let j = 0; j < yNumber; j++) {
+        for (let i = 0; i < xNumber; i++) {
+          arr1.push({ x: x + xOffset * i, y: y + yOffset * j })
+        }
+      }
+
+      for (let i = 0; i < (xNumber * yNumber); i++) {
         setTimeout(() => {
-          this.x = arr[i].x
-          this.y = arr[i].y
-          this.changeOffser(arr[i].x, arr[i].y)
-        }, i * 1000)
+          this.x = arr1[i].x
+          this.y = arr1[i].y
+          this.changeOffser(arr1[i].x, arr1[i].y)
+        }, i * 500)
       }
     },
 
@@ -178,97 +170,27 @@ export default {
     },
 
     realTime (data, x, y) {
-      console.log(data, 'data')
-      this.previews = data
-      var h = 0.5
-      var w = 0.2
-
-      this.previewStyle1 = {
-        width: this.previews.w + 'px',
-        height: this.previews.h + 'px',
-        overflow: 'hidden',
-        margin: '0',
-        zoom: h
+      console.log(data, x, y)
+      if (data.w !== 0 && data.h !== 0) {
+        this.down()
       }
-
-      this.previewStyle2 = {
-        width: this.previews.w + 'px',
-        height: this.previews.h + 'px',
-        overflow: 'hidden',
-        margin: '0',
-        zoom: w
-      }
-
-      this.changeOffser(this.x, this.y)
-      this.down()
     },
 
     imgLoad (data) { },
 
     cropMoving (data) {
-      // console.log(data, '-------------------')
-    },
-
-    changeImg () { },
-
-    startCrop () {
-      this.crap = true
-      this.$refs.cropper.startCrop()
-    },
-
-    stopCrop () {
-      this.crap = false
-      this.$refs.cropper.stopCrop()
-    },
-
-    clearCrop () {
-      this.crap = false
-      this.$refs.cropper.clearCrop()
-    },
-
-    refreshCrop () {
-      this.crap = false
-    },
-
-    rotateLeft () {
-      this.$refs.cropper.rotateLeft()
-    },
-
-    rotateRight () {
-      this.$refs.cropper.rotateRight()
     },
 
     down (type = 'base64') {
       if (type === 'base64') {
         this.$refs.cropper.getCropData(data => {
-          // do something
           if (this.cropImage.indexOf(data) !== -1) {
             return
           }
           this.cropImage.push(data)
-          console.log(this.cropImage)
         })
       } else {
         this.$refs.cropper.getCropBlob(data => {
-          // do something
-          console.log(data)
-        })
-      }
-    },
-
-    changeScale (count) {
-      this.$refs.cropper.changeScale(count)
-    },
-
-    finish (type) {
-      if (type === 'base64') {
-        this.$refs.cropper.getCropData(data => {
-          // do something
-          console.log(data)
-        })
-      } else {
-        this.$refs.cropper.getCropBlob(data => {
-          // do something
           console.log(data)
         })
       }
