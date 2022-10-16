@@ -1,0 +1,30 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		},
+		{
+			"path": "pages/login/index",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"popGesture": "none"
+				}
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "保护区app",
+		"navigationBarBackgroundColor": "#3766ff",
+		"backgroundColor": "#3766ff"
+	},
+	"easycom": {
+		"^u-(.*)": "uview-ui/components/u-$1/u-$1.vue",
+		"@": "/src"
+	}
+}

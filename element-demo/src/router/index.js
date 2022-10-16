@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 // import Home from '../views/Home.vue'
-import vueCropper from '../views/vue-cropper.vue'
+import vueCropper from '../views/Echarts-demo.vue'
 
 Vue.use(VueRouter)
 

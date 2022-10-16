@@ -1,0 +1,16 @@
+{
+  "name": "uni-app-vue3-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "dependencies": {
+    "uview-ui": "^2.0.33",
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
