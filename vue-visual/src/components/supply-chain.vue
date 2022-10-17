@@ -124,7 +124,9 @@ mounted () {
 
       // 使用刚指定的配置项和数据显示图表。
       myChart.setOption(option);
-			window.onresize = myChart.resize
+			window.addEventListener('resize', () => {
+				myChart.resize()
+			})
     }
   }
 }
