@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld v-if="false" />
+    <Management v-else />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import Management from './management/index.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    Management
   }
 }
 </script>
