@@ -68,7 +68,7 @@ export default {
 }
 .dot {
 	position: absolute;
-	left: 10%;
+	left: 5%;
 	top: 50%;
 	transform: translateY(-50%);
 	background: rgb(145, 240, 0);

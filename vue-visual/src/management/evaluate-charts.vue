@@ -46,8 +46,8 @@ mounted () {
         },
         legend: {
           orient: 'vertical',
-          right: '5%',
-          top: '20%',
+          right: '15%',
+          top: '30%',
           textStyle: {
             color: '#fff'
           },
@@ -61,6 +61,7 @@ mounted () {
             name: '',
             type: 'pie',
             radius: ['50%', '80%'],
+            center: ['35%', '50%'],
             data: data,
             emphasis: {
               itemStyle: {
